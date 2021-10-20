@@ -5,7 +5,8 @@
 # Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) + [Docker Compose](https://docs.docker.com/compose/install/) are required to run the project
-- Create a new entry in ```/etc/hosts ```  ```127.0.0.1 dating.api.dev```
+  
+- Create a new entry in ```/etc/hosts ```  ```127.0.0.1 dev.dating.api```
 
 # Starting the project
 
@@ -41,7 +42,7 @@ docker-compose exec core composer test
 ```
 
 
-# Quality Assurance
+# QA Standards
 #### [Lint](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 ```
 docker-compose exec core composer lint
