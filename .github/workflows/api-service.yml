@@ -36,11 +36,10 @@ jobs:
         with:
           context: .
           load: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: test
         run: |
-          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} php -v
+          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} php -v
 
       - name: Extract Docker metadata
         id: meta
