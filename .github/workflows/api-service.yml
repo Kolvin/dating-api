@@ -61,11 +61,12 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.metatata.outputs.tags }}
           labels: ${{ steps.metatata.outputs.labels }}
-  console:
+  test:
     runs-on: ubuntu-latest
-    container: ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-    needs: build
     steps:
-      - name: Run Symfony Console
-        run: |
-          bin/console
+      - name: testy testerson
+        run:  ls -la
+      - name: testy testerson
+        run: docker info
+      - name: testy testerson
+        run: docker images
