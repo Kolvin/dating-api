@@ -73,7 +73,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Image
-        run:  docker pull ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:{{ github.sha }}
+        run:  docker pull ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Symfony Console
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:{{ github.sha }} php bin/console
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:${{ github.sha }} php bin/console
