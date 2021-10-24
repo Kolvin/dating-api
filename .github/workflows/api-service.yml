@@ -62,6 +62,7 @@ jobs:
           tags: ${{ steps.metatata.outputs.tags }}
           labels: ${{ steps.metatata.outputs.labels }}
   test:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: testy testerson
