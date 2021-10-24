@@ -64,6 +64,16 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        env:
+          MYSQL_DATABASE: test_dating_api
+          MYSQL_USER: Singleton
+          MYSQL_PASSWORD: SeCuRiTy
+          MYSQL_ROOT_PASSWORD: SeCuRiTy
+        image: mysql:8
+        ports:
+          - 3306:3306
     steps:
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
