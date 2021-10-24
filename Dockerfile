@@ -1,5 +1,5 @@
-ARG PHP_VERSION=8.1-rc
-ARG COMPOSER_TAG=2.0.14
+ARG PHP_VERSION=8.0
+ARG COMPOSER_TAG=2.1.9
 ARG BUILD_ENV=dev
 ARG PROJECT_NAME=dating-api
 
@@ -14,7 +14,6 @@ FROM php:${PHP_VERSION}-fpm-alpine AS base
 
 # PHP
 COPY .docker/config/php/php.ini.production $PHP_INI_DIR/php.ini
-#COPY .docker/config/php/www.conf $PHP_INI_DIR/php-fpm.d/www.conf
 
 # Tooling
 RUN apk --update add zip libzip-dev curl
@@ -22,7 +21,7 @@ RUN apk --update add zip libzip-dev curl
 # PHP Extenstions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions gd intl opcache && \
+    install-php-extensions gd intl && \
     docker-php-ext-install pdo_mysql zip
 
 FROM base as dev
