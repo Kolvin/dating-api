@@ -4,11 +4,14 @@ on:
   schedule:
     - cron: '42 8 * * *'
   push:
-    branches: [ main, feat/ci/cd ]
-    # Publish semver tags as releases.
+    branches:
+      - main
+      - feat/ci-cd
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ main, feat/ci/cd ]
+    branches:
+      - main
+      - feat/ci-cd
 
 env:
   REGISTRY: ghcr.io
