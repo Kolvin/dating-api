@@ -61,10 +61,9 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.metatata.outputs.tags }}
           labels: ${{ steps.metatata.outputs.labels }}
-  Console:
+  console:
     runs-on: ubuntu-latest
-    container:
-      image: ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    container: ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
     needs: build
     steps:
       - name: Run Symfony Console
