@@ -1,4 +1,4 @@
-name: Docker
+name: Build Scan Test
 
 on:
   schedule:
@@ -6,12 +6,10 @@ on:
   push:
     branches:
       - main
-      - feat/ci-cd
     tags: [ 'v*.*.*' ]
   pull_request:
     branches:
       - main
-      - feat/ci-cd
 
 env:
   REGISTRY: ghcr.io
