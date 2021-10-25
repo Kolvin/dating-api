@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class FunctionalTest extends KernelTestCase
+class FunctionalTest extends WebTestCase
 {
     public function testExample()
     {

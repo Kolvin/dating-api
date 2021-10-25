@@ -88,5 +88,14 @@ jobs:
       - name: Static Analysis
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer stan
 
+      - name: Unit Tests
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Unit
+
+      - name: Integration Tests
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Integration
+
+      - name: Functional Tests
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Functional
+
       - name: Symfony Console
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console
