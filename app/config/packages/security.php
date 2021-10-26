@@ -6,11 +6,13 @@ use Symfony\Config\SecurityConfig;
 
 return static function (SecurityConfig $security) {
     $security->enableAuthenticatorManager(true);
-    $security->passwordHasher(PasswordAuthenticatedUserInterface::class);
+    $security->passwordHasher(PasswordAuthenticatedUserInterface::class)
+        ->algorithm('auto')
+    ;
     $security->provider('app_user_provider')
         ->entity()
             ->class(User::class)
-        ->property('email')
+            ->property('email')
     ;
 
     $security->firewall('dev')
