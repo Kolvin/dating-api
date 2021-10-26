@@ -9,7 +9,7 @@ doctrine:
         mappings:
             User:
                 is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/src/Modules/Users/Mapping'
+                dir: '%kernel.project_dir%/src/Modules/Users/Entities'
+                type: staticphp
                 prefix: 'App\Modules\Users\Entities'
                 alias: User
