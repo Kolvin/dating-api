@@ -20,12 +20,19 @@ return static function (SecurityConfig $security) {
         ->security(false)
     ;
 
-    $security->firewall('api')
-        ->pattern('^/')
+    $security->firewall('api_login')
+        ->pattern('^/api/user/login')
+        ->stateless(true)
         ->lazy(true)
         ->jsonLogin()
-            ->checkPath('/login')
-            ->usernamePath('security.credentials.login')
-            ->passwordPath('security.credentials.password')
+            ->checkPath('api_login')
+                ->usernamePath('email')
+                ->passwordPath('password')
     ;
+
+//    $security->firewall('api')
+//        ->pattern('^/api/v')
+//        ->stateless(true)
+//        ->guard()
+//    ;
 };

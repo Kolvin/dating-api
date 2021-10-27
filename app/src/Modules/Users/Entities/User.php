@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Modules\Users\Entities;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -20,19 +21,24 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private array $roles = [];
 
-    public function __construct()
-    {
-        $this->id = Uuid::uuid4()->toString();
-    }
-
     public function getId(): string
     {
         return $this->id;
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
     }
 
     public function getRoles()
@@ -62,7 +68,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return '';
     }
 
     public static function loadMetadata(ClassMetadata $metadata): void
@@ -75,6 +81,11 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $metadata->mapField([
             'fieldName' => 'email',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'password',
             'type' => 'string',
         ]);
     }
