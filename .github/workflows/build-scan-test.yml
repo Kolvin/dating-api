@@ -33,7 +33,11 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: actions/docker-login
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract Docker metadata
         id: metatata
@@ -66,7 +70,11 @@ jobs:
     continue-on-error: true
     steps:
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: actions/docker-login
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Lint
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer lint
   static-analysis:
@@ -75,7 +83,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: actions/docker-login
+        uses: actions/docker-login@${{ github.sha }}
       - name: Static Analysis
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer stan
 
@@ -84,7 +92,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: actions/docker-login
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Unit Tests
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Unit
 
@@ -93,7 +105,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: actions/docker-login
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Integration Tests
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Integration
 
@@ -112,7 +128,11 @@ jobs:
           - 3306:3306
     steps:
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: actions/docker-login
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: DB setup
         run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer rtf
       - name: Functional Tests
