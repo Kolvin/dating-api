@@ -95,7 +95,7 @@ jobs:
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer stan
 
       - name: DB Setup
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer rtf
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer rtf
 
       - name: Unit Tests
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Unit
@@ -104,4 +104,4 @@ jobs:
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Integration
 
       - name: Functional Tests
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Functional
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Functional
