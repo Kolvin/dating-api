@@ -51,6 +51,9 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha,format=long
 
+      - name: Setup Testing .env
+        run: echo "${{ secrets.DATING_API_CI_TEST_ENV }}" > app/.env
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
@@ -64,7 +67,7 @@ jobs:
     services:
       mysql:
         env:
-          MYSQL_DATABASE: test_dating_api
+          MYSQL_DATABASE: dating_api_test
           MYSQL_USER: Singleton
           MYSQL_PASSWORD: SeCuRiTy
           MYSQL_ROOT_PASSWORD: SeCuRiTy
@@ -82,7 +85,7 @@ jobs:
       - name: Pull Image
         run:  docker pull ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
 
-      - name: Symfony Console
+      - name: About Symfony
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console about
 
       - name: Lint
