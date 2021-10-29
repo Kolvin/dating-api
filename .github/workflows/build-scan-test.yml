@@ -51,8 +51,8 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha,format=long
 
-      - name: Setup Testing .env
-        run: echo "${{ secrets.DATING_API_CI_TEST_ENV }}" > app/.env
+      - name: Setup Testing .ENV
+        run: echo "${{ secrets.DATING_API_CI_TEST_ENV }}" > app/.env; cat app/.env
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
