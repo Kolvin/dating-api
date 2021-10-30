@@ -139,7 +139,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create DB Schema
-        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console d:s:v
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console d:s:c
       - name: Load Fixtures
         run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console d:f:l -n
       - name: Functional Tests
