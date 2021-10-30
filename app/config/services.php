@@ -17,6 +17,6 @@ return function (ContainerConfigurator $configurator) {
 
     // makes some classes in Http/Modules available to be used as services
     $services->load('App\\Modules\\', '../src/Modules/*')
-        ->exclude('../src/Modules/*/{Entities}')
+        ->exclude('../src/Modules/*/{Entities,Fixtures,Data}')
     ;
 };

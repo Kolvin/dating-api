@@ -8,21 +8,47 @@ class ApiLoginControllerTest extends WebTestCase
 {
     public function testValidLogin(): void
     {
+        $client = $this->attemptLogin([
+            'email' => $_ENV['ADMIN_EMAIL'],
+            'password' => $_ENV['DEFAULT_PASSWORD'],
+        ]);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testNoEmailLogin(): void
+    {
+        $client = $this->attemptLogin([
+            'password' => $_ENV['DEFAULT_PASSWORD'],
+        ]);
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    public function testNoPasswordLogin(): void
+    {
+        $client = $this->attemptLogin([
+            'email' => $_ENV['ADMIN_EMAIL'],
+        ]);
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    public function testBlankLogin(): void
+    {
+        $client = $this->attemptLogin([]);
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    private function attemptLogin(array $postContent)
+    {
         $client = static::createClient();
 
-        $client->request(
-            'POST',
-            '/api/user/login',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            strval(json_encode([
-                'email' => $_ENV['ADMIN_EMAIL'],
-                'password' => 'password1',
-            ]))
+        $client->request('POST', '/api/user/login', [], [], ['CONTENT_TYPE' => 'application/json'],
+            strval(json_encode($postContent))
         );
 
-        // no real auth setup yet
-        $this->assertEquals(401, $client->getResponse()->getStatusCode());
+        return $client;
     }
 }
