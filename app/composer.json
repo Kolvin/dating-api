@@ -59,8 +59,6 @@
         "symfony/polyfill-php72": "*"
     },
     "scripts": {
-        "rtf": "bin/console d:f:l -n --env test",
-        "rdf": "bin/console d:f:l -n --env dev",
         "test": "vendor/bin/simple-phpunit",
         "lint": "vendor/bin/php-cs-fixer fix",
         "stan": "vendor/bin/phpstan analyse",
