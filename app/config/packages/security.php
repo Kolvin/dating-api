@@ -1,9 +1,9 @@
 <?php
 
 use App\Modules\Users\Entities\User;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationFailureHandler;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Config\SecurityConfig;
 
 return static function (SecurityConfig $security) {
@@ -37,6 +37,5 @@ return static function (SecurityConfig $security) {
     $security->firewall('api')
         ->pattern('^/api/v')
         ->stateless(true)
-        ->jwt()
     ;
 };

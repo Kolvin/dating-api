@@ -13,7 +13,23 @@ class ApiLoginControllerTest extends WebTestCase
             'password' => $_ENV['DEFAULT_PASSWORD'],
         ]);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $response = $client->getResponse();
+        $data = json_decode($response->getContent(), true);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertArrayHasKey('token', $data);
+
+        $token = $data['token'];
+        $tokenParts = explode('.', $token);
+        $tokenHeader = base64_decode($tokenParts[0]);
+        $tokenPayload = base64_decode($tokenParts[1]);
+
+        $jwtHeader = json_decode($tokenHeader);
+        $jwtPayload = json_decode($tokenPayload);
+
+        $this->assertEquals($jwtHeader->typ, 'JWT');
+        $this->assertEquals($jwtHeader->alg, 'RS256');
+        $this->assertEquals($jwtPayload->username, $_ENV['ADMIN_EMAIL']);
     }
 
     public function testNoEmailLogin(): void
@@ -22,7 +38,8 @@ class ApiLoginControllerTest extends WebTestCase
             'password' => $_ENV['DEFAULT_PASSWORD'],
         ]);
 
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
     public function testNoPasswordLogin(): void
@@ -31,14 +48,16 @@ class ApiLoginControllerTest extends WebTestCase
             'email' => $_ENV['ADMIN_EMAIL'],
         ]);
 
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
     public function testBlankLogin(): void
     {
         $client = $this->attemptLogin([]);
 
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
     private function attemptLogin(array $postContent)
