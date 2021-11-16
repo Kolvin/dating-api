@@ -16,7 +16,7 @@ class Kernel extends BaseKernel
 
     /**
      * @throws \Exception
-     * https://symfony.com/doc/current/configuration.html#configuration-formats
+     *                    https://symfony.com/doc/current/configuration.html#configuration-formats
      */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
