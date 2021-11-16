@@ -4,50 +4,34 @@ declare(strict_types=1);
 
 namespace App\Modules\Users\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use \DateTime;
 
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    private string $id;
-
-    private string $email;
+    public function __construct(
+        private string $id,
+        private string $email,
+        private string $firstName,
+        private string $lastName,
+        private DateTime $dateOfBirth,
+        private ?string $middleNames = '',
+        private ?string $bio = '',
+        ) {
+    }
 
     private ?string $password = '';
 
-    private string $firstName;
-
-    private ?string $middleNames = '';
-
-    private string $lastName;
-
-    private DateTime $dateOfBirth;
-
     private ?string $profilePictureStorageKey = '';
 
-    private ?string $bio = '';
-
-    public function __construct()
-    {
-        $this->id = Uuid::uuid4()->toString();
-    }
-
-    /**
-     * @var array<string>
-     */
-    private array $roles = [];
+    /** @var array<string> */
+    private array $roles = ['ROLE_LOGGED_IN'];
 
     public function getId(): string
     {
         return $this->id;
-    }
-
-    public function setId(string $id): void
-    {
-        $this->id = $id;
     }
 
     public function getEmail(): string
@@ -60,9 +44,54 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
     }
 
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function getDateOfBirth(): DateTime
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function setDateOfBirth(DateTime $dateOfBirth): void
+    {
+        $this->dateOfBirth = $dateOfBirth;
+    }
+
+    public function getMiddleNames(): ?string
+    {
+        return $this->middleNames;
+    }
+
+    public function getProfilePictureStorageKey(): ?string
+    {
+        return $this->profilePictureStorageKey;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
     public function getRoles()
     {
-        return $this->roles = ['ROLE_LOGGED_IN'];
+        return $this->roles;
     }
 
     public function getSalt()
