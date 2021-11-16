@@ -51,6 +51,12 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha,format=long
 
+      - name: Change to Testing ENV
+        run: sed -i "s/APP_ENV=dev/APP_ENV=test/g" app/.env
+
+      - name: Write Testing ENV Locals
+        run: echo "${{ secrets.DATING_API_CI_TEST_ENV }}" > app/.env.test.local
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
@@ -58,13 +64,67 @@ jobs:
           push: true
           tags: ${{ steps.metatata.outputs.tags }}
           labels: ${{ steps.metatata.outputs.labels }}
-  test:
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer lint
+
+  static-analysis:
+    needs: build
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Static Analysis
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer stan
+
+  unit-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Unit Tests
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Unit
+
+  integration-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Integration Tests
+        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Integration
+
+  functional-tests:
     needs: build
     runs-on: ubuntu-latest
     services:
       mysql:
         env:
-          MYSQL_DATABASE: test_dating_api
+          MYSQL_DATABASE: dating_api_test
           MYSQL_USER: Singleton
           MYSQL_PASSWORD: SeCuRiTy
           MYSQL_ROOT_PASSWORD: SeCuRiTy
@@ -78,24 +138,9 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull Image
-        run:  docker pull ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
-
-      - name: Lint
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer lint
-
-      - name: Static Analysis
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} composer stan
-
-      - name: Unit Tests
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Unit
-
-      - name: Integration Tests
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Integration
-
+      - name: Create DB Schema
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console d:s:c
+      - name: Load Fixtures
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console d:f:l -n
       - name: Functional Tests
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Functional
-
-      - name: Symfony Console
-        run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Functional
