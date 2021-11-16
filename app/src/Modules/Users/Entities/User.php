@@ -49,7 +49,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles()
     {
-        return $this->roles;
+        return $this->roles = ['ROLE_LOGGED_IN'];
     }
 
     public function getSalt()

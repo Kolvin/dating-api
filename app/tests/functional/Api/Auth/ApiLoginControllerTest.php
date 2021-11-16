@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Auth;
+namespace Tests\Functional\Api\Auth;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -29,7 +29,7 @@ class ApiLoginControllerTest extends WebTestCase
 
         $this->assertEquals($jwtHeader->typ, 'JWT');
         $this->assertEquals($jwtHeader->alg, 'RS256');
-        $this->assertEquals($jwtPayload->username, $_ENV['ADMIN_EMAIL']);
+        $this->assertEquals($jwtPayload->email, $_ENV['ADMIN_EMAIL']);
     }
 
     public function testNoEmailLogin(): void

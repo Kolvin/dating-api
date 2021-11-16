@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Functional\Auth;
+namespace Tests\Functional\Api;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class IndexController extends WebTestCase
+class IndexControllerTest extends WebTestCase
 {
     public function test200IsReturned(): void
     {
