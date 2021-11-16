@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use \DateTime;
 
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -16,6 +17,18 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $email;
 
     private ?string $password = '';
+
+    private string $firstName;
+
+    private ?string $middleNames = '';
+
+    private string $lastName;
+
+    private DateTime $dateOfBirth;
+
+    private ?string $profilePictureStorageKey = '';
+
+    private ?string $bio = '';
 
     public function __construct()
     {
@@ -97,6 +110,36 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $metadata->mapField([
             'fieldName' => 'password',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'firstName',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'middleNames',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'lastName',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'dateOfBirth',
+            'type' => 'datetime',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'profilePictureStorageKey',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'bio',
             'type' => 'string',
         ]);
     }
