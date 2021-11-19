@@ -16,7 +16,6 @@ final class CreateUserRequest
 {
     public function __construct(
         private string $email,
-        private int $age,
         private string $gender,
         private string $latitude,
         private string $longitude,
@@ -32,11 +31,6 @@ final class CreateUserRequest
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function getAge(): int
-    {
-        return $this->age;
     }
 
     public function getGender(): string
@@ -87,7 +81,6 @@ final class CreateUserRequest
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('email', [new NotBlank(), new Email()]);
-        $metadata->addPropertyConstraints('age', [new NotBlank(), new Positive()]);
         $metadata->addPropertyConstraint('firstName', new Length([
             'min' => 2,
             'max' => 50,

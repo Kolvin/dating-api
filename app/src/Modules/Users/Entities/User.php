@@ -16,7 +16,6 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         private string $email,
         private string $firstName,
         private string $lastName,
-        private int $age,
         private string $gender,
         private string $latitude,
         private string $longitude,
@@ -41,11 +40,6 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function getAge(): int
-    {
-        return $this->age;
     }
 
     public function getGender(): string
@@ -144,11 +138,6 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $metadata->mapField([
             'fieldName' => 'password',
             'type' => 'string',
-        ]);
-
-        $metadata->mapField([
-            'fieldName' => 'age',
-            'type' => 'integer',
         ]);
 
         $metadata->mapField([

@@ -12,21 +12,17 @@ class ValidationService
     }
 
     /**
-     * @param mixed $value
-     *
-     * @return ConstraintViolationListInterface<int, string>
+     * @return ConstraintViolationListInterface<string>
      */
-    public function validate($value): ConstraintViolationListInterface
+    public function validate(mixed $value): ConstraintViolationListInterface
     {
         return $this->validator->validate($value);
     }
 
     /**
-     * @param mixed $request
-     *
      * @return array<string>
      */
-    public function transformValidationErrors($request)
+    public function transformValidationErrors(mixed $request): array
     {
         $violations = $this->validator->validate($request);
 

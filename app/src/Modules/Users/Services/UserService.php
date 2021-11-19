@@ -37,7 +37,6 @@ class UserService
             email: $request->getEmail(),
             firstName: $request->getFirstName(),
             lastName: $request->getLastName(),
-            age: $request->getAge(),
             gender: $request->getGender(),
             latitude: $request->getLatitude(),
             longitude: $request->getLongitude(),
