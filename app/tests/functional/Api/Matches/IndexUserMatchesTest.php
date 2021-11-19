@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Api;
+namespace Tests\Functional\Api\Matches;
 
 use Tests\Functional\FunctionalTestCase;
 

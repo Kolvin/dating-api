@@ -16,6 +16,10 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         private string $email,
         private string $firstName,
         private string $lastName,
+        private int $age,
+        private string $gender,
+        private string $latitude,
+        private string $longitude,
         private DateTime $dateOfBirth,
         private ?string $middleNames = '',
         private ?string $bio = '',
@@ -39,9 +43,24 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function getAge(): int
     {
-        $this->email = $email;
+        return $this->age;
+    }
+
+    public function getGender(): string
+    {
+        return $this->gender;
+    }
+
+    public function getLatitude(): string
+    {
+        return $this->latitude;
+    }
+
+    public function getLongitude(): string
+    {
+        return $this->longitude;
     }
 
     public function getFirstName(): string
@@ -49,19 +68,9 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): void
-    {
-        $this->firstName = $firstName;
-    }
-
     public function getLastName(): string
     {
         return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): void
-    {
-        $this->lastName = $lastName;
     }
 
     public function getDateOfBirth(): DateTime
@@ -69,24 +78,19 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(DateTime $dateOfBirth): void
-    {
-        $this->dateOfBirth = $dateOfBirth;
-    }
-
     public function getMiddleNames(): ?string
     {
         return $this->middleNames;
     }
 
-    public function getProfilePictureStorageKey(): ?string
-    {
-        return $this->profilePictureStorageKey;
-    }
-
     public function getBio(): ?string
     {
         return $this->bio;
+    }
+
+    public function getProfilePictureStorageKey(): ?string
+    {
+        return $this->profilePictureStorageKey;
     }
 
     public function getRoles()
@@ -139,6 +143,26 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $metadata->mapField([
             'fieldName' => 'password',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'age',
+            'type' => 'integer',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'gender',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'latitude',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'longitude',
             'type' => 'string',
         ]);
 

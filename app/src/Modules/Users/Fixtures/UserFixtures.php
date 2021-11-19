@@ -20,19 +20,22 @@ class UserFixtures extends Fixture
     {
         foreach (SystemDefaults::USERS as $userData) {
             $newUserRequest = new CreateUserRequest(
-                $userData['email'],
-                $userData['first_name'],
-                $userData['last_name'],
-                new \DateTime('now'),
-                null,
-                $userData['middle_names'],
-                $userData['bio'],
+                email: $userData['email'],
+                age: $userData['age'],
+                gender: $userData['gender'],
+                latitude: strval($userData['latitude']),
+                longitude: strval($userData['longitude']),
+                firstName: $userData['first_name'],
+                lastName: $userData['last_name'],
+                dateOfBirth: new \DateTime($userData['date_of_birth']),
+                profilePictures: null,
+                middleNames: $userData['middle_names'],
+                bio: $userData['bio'],
             );
 
             $response = $this->service->create($newUserRequest);
             $user = $response->getUser();
             $this->setReference($user->getEmail().'-user-ref', $user);
         }
-        $manager->flush();
     }
 }

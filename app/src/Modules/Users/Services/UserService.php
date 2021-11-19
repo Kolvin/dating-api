@@ -20,13 +20,17 @@ class UserService
     public function create(CreateUserRequest $request): CreateUserResponse
     {
         $newUser = new User(
-            Uuid::uuid4()->toString(),
-            $request->getEmail(),
-            $request->getFirstName(),
-            $request->getLastName(),
-            $request->getDateOfBirth(),
-            $request->getMiddleNames(),
-            $request->getBio()
+            id: Uuid::uuid4()->toString(),
+            email: $request->getEmail(),
+            firstName: $request->getFirstName(),
+            lastName: $request->getLastName(),
+            age: $request->getAge(),
+            gender: $request->getGender(),
+            latitude: $request->getLatitude(),
+            longitude: $request->getLongitude(),
+            dateOfBirth: $request->getDateOfBirth(),
+            middleNames: $request->getMiddleNames(),
+            bio: $request->getBio()
         );
 
         $newUser->setPassword($this->passwordHasher->hashPassword($newUser, $_ENV['DEFAULT_PASSWORD']));
