@@ -33,7 +33,7 @@ class SystemDefaults
             'first_name' => 'Marva',
             'middle_names' => 'Mathews',
             'last_name' => 'Gardner',
-            'email' => 'marvagardner@utarian.com',
+            'email' => 'marvagardnerutarian.com',
             'gender' => 'female',
             'age' => 40,
             'latitude' => -83.947367,
