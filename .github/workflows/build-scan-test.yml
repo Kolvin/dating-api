@@ -95,6 +95,16 @@ jobs:
   unit-tests:
     needs: build
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        env:
+          MYSQL_DATABASE: dating_api_test
+          MYSQL_USER: Singleton
+          MYSQL_PASSWORD: SeCuRiTy
+          MYSQL_ROOT_PASSWORD: SeCuRiTy
+        image: mysql:8
+        ports:
+          - 3306:3306
     steps:
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
@@ -102,6 +112,16 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create DB Schema
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console d:s:c
+      - name: Load Fixtures
+        run: docker run --network=host --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} php bin/console d:f:l -n
       - name: Unit Tests
         run: docker run --rm ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} vendor/bin/simple-phpunit --testsuite Unit
 
