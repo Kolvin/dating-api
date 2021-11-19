@@ -24,7 +24,6 @@ class UserFixtures extends Fixture
         foreach (SystemDefaults::USERS as $userData) {
             $newUserRequest = new CreateUserRequest(
                 email: $userData['email'],
-                age: $userData['age'],
                 gender: $userData['gender'],
                 latitude: strval($userData['latitude']),
                 longitude: strval($userData['longitude']),

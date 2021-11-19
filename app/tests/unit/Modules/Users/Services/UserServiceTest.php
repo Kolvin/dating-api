@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 class UserServiceTest extends KernelTestCase
 {
     private UserService $service;
+
     public function setUp(): void
     {
         self::bootKernel();
         $this->service = static::getContainer()->get(UserService::class);
     }
-
 
     public function testValidCreation()
     {
@@ -32,7 +32,7 @@ class UserServiceTest extends KernelTestCase
             bio: 'Whatchu doin',
         ));
 
-        $this->assertTrue($response->getStatusCode() == Response::HTTP_CREATED);
+        $this->assertTrue(Response::HTTP_CREATED == $response->getStatusCode());
     }
 
     public function testInvalidEmail()
@@ -50,7 +50,7 @@ class UserServiceTest extends KernelTestCase
             bio: 'Whatchu doin',
         ));
 
-        $this->assertTrue($response->getStatusCode() == Response::HTTP_BAD_REQUEST);
+        $this->assertTrue(Response::HTTP_BAD_REQUEST == $response->getStatusCode());
         $this->assertArrayHasKey('email', $response->getNotices());
     }
 
@@ -69,7 +69,7 @@ class UserServiceTest extends KernelTestCase
             bio: 'Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? Whatchu doin huh? ',
         ));
 
-        $this->assertTrue($response->getStatusCode() == Response::HTTP_BAD_REQUEST);
+        $this->assertTrue(Response::HTTP_BAD_REQUEST == $response->getStatusCode());
         $this->assertArrayHasKey('bio', $response->getNotices());
     }
 }
