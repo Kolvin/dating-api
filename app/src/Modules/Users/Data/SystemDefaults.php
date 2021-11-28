@@ -29,18 +29,6 @@ class SystemDefaults
 {
     public const USERS = [
         [
-            'id' => 'b69f0f27-75c3-46f6-8ffd-85567eddf8cc',
-            'first_name' => 'Marva',
-            'middle_names' => 'Mathews',
-            'last_name' => 'Gardner',
-            'email' => 'marvagardnerutarian.com',
-            'gender' => 'female',
-            'latitude' => -83.947367,
-            'longitude' => 43.52675,
-            'bio' => 'Ipsum consectetur esse cupidatat sunt anim adipisicing aliqua qui incididunt. Fugiat consectetur in velit nostrud labore culpa ullamco. Deserunt reprehenderit ullamco minim quis. Cupidatat consectetur ut sint elit consectetur in.',
-            'date_of_birth' => '2014-04-28T05:14:40 -01:00',
-        ],
-        [
             'id' => '9d2c8a9b-bd1e-414c-b149-eb2a9f7f01b0',
             'first_name' => 'Faulkner',
             'middle_names' => 'Jenkins',
@@ -51,6 +39,18 @@ class SystemDefaults
             'longitude' => -77.024168,
             'bio' => 'Laborum non laborum occaecat ullamco labore nisi ipsum minim dolor consectetur. Excepteur velit excepteur magna excepteur officia cillum duis. Ipsum esse reprehenderit occaecat duis sint laboris.',
             'date_of_birth' => '2016-10-07T08:27:17 -01:00',
+        ],
+        [
+            'id' => 'b69f0f27-75c3-46f6-8ffd-85567eddf8cc',
+            'first_name' => 'Marva',
+            'middle_names' => 'Mathews',
+            'last_name' => 'Gardner',
+            'email' => 'marvagardnerutarian.com',
+            'gender' => 'female',
+            'latitude' => -83.947367,
+            'longitude' => 43.52675,
+            'bio' => 'Ipsum consectetur esse cupidatat sunt anim adipisicing aliqua qui incididunt. Fugiat consectetur in velit nostrud labore culpa ullamco. Deserunt reprehenderit ullamco minim quis. Cupidatat consectetur ut sint elit consectetur in.',
+            'date_of_birth' => '2014-04-28T05:14:40 -01:00',
         ],
         [
             'id' => 'd46886de-8d5c-4f26-9a70-a79e3742d62c',

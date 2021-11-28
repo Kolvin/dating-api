@@ -1,5 +1,5 @@
-[comment]: <> (# Local Environment Visual)
-[comment]: <> (![Alt text]&#40;.docker/dev-env-visual.png?raw=true "Optional Title"&#41;)
+# Local Environment Visual
+![Alt text](.docker/dev-env-visual.png?raw=true "Optional Title")
 
 
 # Prerequisites
