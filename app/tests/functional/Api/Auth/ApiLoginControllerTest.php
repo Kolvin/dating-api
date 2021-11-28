@@ -2,6 +2,7 @@
 
 namespace Tests\Functional\Api\Auth;
 
+use App\Modules\Users\Data\SystemDefaults;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ApiLoginControllerTest extends WebTestCase
@@ -9,7 +10,7 @@ class ApiLoginControllerTest extends WebTestCase
     public function testValidLogin(): void
     {
         $client = $this->attemptLogin([
-            'email' => $_ENV['ADMIN_EMAIL'],
+            'email' => SystemDefaults::USERS[0]['email'],
             'password' => $_ENV['DEFAULT_PASSWORD'],
         ]);
 
@@ -29,7 +30,7 @@ class ApiLoginControllerTest extends WebTestCase
 
         $this->assertEquals($jwtHeader->typ, 'JWT');
         $this->assertEquals($jwtHeader->alg, 'RS256');
-        $this->assertEquals($jwtPayload->email, $_ENV['ADMIN_EMAIL']);
+        $this->assertEquals($jwtPayload->email, SystemDefaults::USERS[0]['email']);
     }
 
     public function testNoEmailLogin(): void
@@ -45,7 +46,7 @@ class ApiLoginControllerTest extends WebTestCase
     public function testNoPasswordLogin(): void
     {
         $client = $this->attemptLogin([
-            'email' => $_ENV['ADMIN_EMAIL'],
+            'email' => SystemDefaults::USERS[0]['email'],
         ]);
 
         $response = $client->getResponse();

@@ -7,7 +7,7 @@ security:
         class: App\Modules\Users\Entities\User
         property: email
 
-  encoders:
+  password_hashers:
     App\Modules\Users\Entities\User:
       algorithm: auto
 

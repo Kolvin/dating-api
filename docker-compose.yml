@@ -21,6 +21,7 @@ services:
       PROJECT_NAME: $PROJECT_NAME
     volumes:
       - ./.docker/config/nginx/templates:/etc/nginx/templates
+      - ./app/public:/var/www/$PROJECT_NAME/public
     depends_on:
       - api
     networks:
@@ -39,7 +40,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
     volumes:
-      - ~/docker/database/mysql/$MYSQL_TAG/$PROJECT_NAME/:/var/lib/mysql
+      - ~/database/mysql/$MYSQL_TAG/$PROJECT_NAME/:/var/lib/mysql
     networks:
       - backend
 

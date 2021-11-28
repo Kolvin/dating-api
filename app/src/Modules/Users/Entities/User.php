@@ -4,37 +4,37 @@ declare(strict_types=1);
 
 namespace App\Modules\Users\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    private string $id;
-
-    private string $email;
+    public function __construct(
+        private string $id,
+        private string $email,
+        private string $firstName,
+        private string $lastName,
+        private string $gender,
+        private string $latitude,
+        private string $longitude,
+        private DateTime $dateOfBirth,
+        private ?string $middleNames = '',
+        private ?string $bio = '',
+        ) {
+    }
 
     private ?string $password = '';
 
-    public function __construct()
-    {
-        $this->id = Uuid::uuid4()->toString();
-    }
+    private ?string $profilePictureStorageKey = '';
 
-    /**
-     * @var array<string>
-     */
-    private array $roles = [];
+    /** @var array<string> */
+    private array $roles = ['ROLE_LOGGED_IN'];
 
     public function getId(): string
     {
         return $this->id;
-    }
-
-    public function setId(string $id): void
-    {
-        $this->id = $id;
     }
 
     public function getEmail(): string
@@ -42,14 +42,54 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function getGender(): string
     {
-        $this->email = $email;
+        return $this->gender;
+    }
+
+    public function getLatitude(): string
+    {
+        return $this->latitude;
+    }
+
+    public function getLongitude(): string
+    {
+        return $this->longitude;
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getDateOfBirth(): DateTime
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function getMiddleNames(): ?string
+    {
+        return $this->middleNames;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    public function getProfilePictureStorageKey(): ?string
+    {
+        return $this->profilePictureStorageKey;
     }
 
     public function getRoles()
     {
-        return $this->roles = ['ROLE_LOGGED_IN'];
+        return $this->roles;
     }
 
     public function getSalt()
@@ -97,6 +137,51 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $metadata->mapField([
             'fieldName' => 'password',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'gender',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'latitude',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'longitude',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'firstName',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'middleNames',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'lastName',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'dateOfBirth',
+            'type' => 'datetime',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'profilePictureStorageKey',
+            'type' => 'string',
+        ]);
+
+        $metadata->mapField([
+            'fieldName' => 'bio',
             'type' => 'string',
         ]);
     }

@@ -10,12 +10,17 @@ return function (ContainerConfigurator $configurator) {
         ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
     ;
 
-    // makes classes in Http/Api available to be used as services
+    // makes classes in http/api available to be used as services
     $services->load('App\\Http\\', '../src/Http/*')
         ->tag('controller.service_aruguments')
     ;
 
-    // makes some classes in Http/Modules available to be used as services
+    // makes classes in src/services available to be used as services
+    $services->load('App\\Services\\', '../src/Services/*')
+        ->tag('controller.service_aruguments')
+    ;
+
+    // makes some classes in http/modules available to be used as services
     $services->load('App\\Modules\\', '../src/Modules/*')
         ->exclude('../src/Modules/*/{Entities,Data}')
     ;

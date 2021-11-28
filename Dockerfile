@@ -41,7 +41,7 @@ COPY --from=dependencies app/vendor vendor
 RUN composer install --no-scripts
 
 # Generate public/private keys for JWT use
-RUN bin/console lexik:jwt:generate-keypair
+RUN bin/console lexik:jwt:generate-keypair --overwrite
 
 RUN mkdir -p var/log var/cache && \
     chmod -R 777 var/log var/cache
