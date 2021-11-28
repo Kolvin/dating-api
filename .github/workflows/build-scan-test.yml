@@ -102,7 +102,7 @@ jobs:
           MYSQL_USER: Singleton
           MYSQL_PASSWORD: SeCuRiTy
           MYSQL_ROOT_PASSWORD: SeCuRiTy
-        image: mysql:8
+        image: mysql:5.7
         ports:
           - 3306:3306
     steps:
@@ -148,7 +148,7 @@ jobs:
           MYSQL_USER: Singleton
           MYSQL_PASSWORD: SeCuRiTy
           MYSQL_ROOT_PASSWORD: SeCuRiTy
-        image: mysql:8
+        image: mysql:5.7
         ports:
           - 3306:3306
     steps:
