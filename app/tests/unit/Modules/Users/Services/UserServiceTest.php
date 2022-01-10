@@ -20,7 +20,7 @@ class UserServiceTest extends KernelTestCase
     public function testValidCreation()
     {
         $response = $this->service->create(new CreateUserRequest(
-            email: 'casedeleon@utarian.com',
+            email: 'testytesterson@datingapi.com',
             gender: 'male',
             latitude: '-23.710326',
             longitude: '-78.64836',
@@ -38,7 +38,7 @@ class UserServiceTest extends KernelTestCase
     public function testInvalidEmail()
     {
         $response = $this->service->create(new CreateUserRequest(
-            email: 'casedeleonutarian.com',
+            email: 'testytestersonafa23.com',
             gender: 'male',
             latitude: '-23.710326',
             longitude: '-78.64836',
@@ -57,7 +57,7 @@ class UserServiceTest extends KernelTestCase
     public function testCreationWithExceedingBioCharacterCount()
     {
         $response = $this->service->create(new CreateUserRequest(
-            email: 'casedeleonutarian.com',
+            email: 'testytesterson@datingapi.com',
             gender: 'male',
             latitude: '-23.710326',
             longitude: '-78.64836',

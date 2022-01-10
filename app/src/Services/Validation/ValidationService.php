@@ -11,9 +11,6 @@ class ValidationService
     {
     }
 
-    /**
-     * @return ConstraintViolationListInterface<string>
-     */
     public function validate(mixed $value): ConstraintViolationListInterface
     {
         return $this->validator->validate($value);

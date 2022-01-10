@@ -133,7 +133,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $metadata->mapField([
             'fieldName' => 'email',
             'type' => 'string',
-            'unique' => true
+            'unique' => true,
         ]);
 
         $metadata->mapField([
