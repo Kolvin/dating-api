@@ -87,12 +87,12 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->profilePictureStorageKey;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -133,6 +133,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $metadata->mapField([
             'fieldName' => 'email',
             'type' => 'string',
+            'unique' => true
         ]);
 
         $metadata->mapField([
